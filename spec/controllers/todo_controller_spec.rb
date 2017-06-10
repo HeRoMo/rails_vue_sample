@@ -16,23 +16,24 @@ RSpec.describe TodoController, type: :controller do
     end
   end
 
-  describe "GET #update" do
+  describe "PUT #update" do
     it "returns http success" do
-      get :update
+      put :update, params: { id: 1, todo: { title: 'updated' } }
       expect(response).to have_http_status(:success)
     end
   end
 
-  describe "GET #create" do
+  describe "POST #create" do
     it "returns http success" do
-      get :create
+      post :create, params: { todo: { title: 'test todo' } }
       expect(response).to have_http_status(:success)
     end
   end
 
-  describe "GET #destroy" do
+  describe "DELETE #destroy" do
     it "returns http success" do
-      get :destroy
+      todo = FactoryGirl.create(:todo)
+      delete :destroy, params: { id: todo.id }
       expect(response).to have_http_status(:success)
     end
   end
