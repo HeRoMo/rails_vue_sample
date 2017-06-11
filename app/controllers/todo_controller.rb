@@ -5,6 +5,7 @@ class TodoController < ApplicationController
   end
 
   def index; end
+  def vuex; end
 
   def update
     @todo = Todo.find params[:id]
