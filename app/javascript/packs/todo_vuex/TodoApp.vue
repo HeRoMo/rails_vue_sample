@@ -1,38 +1,30 @@
 <template lang="pug">
   #todo-app
     h2 TODO List
-    add-todo(@add="appendTodo")
+    add-todo
     ul
-      todo-item(v-for="todo in todos", :todo="todo", :key="todo.id")
+      todo-item(v-for="todo in this.$store.state.todos", :todo="todo", :key="todo.id")
 
 </template>
 
 <script>
   'use strict';
-  import axios from 'axios';
   import AddTodo from './AddTodo.vue'
   import TodoItem from './TodoItem.vue'
+  import store from './store'
+
   export default {
     components:{
       'add-todo': AddTodo,
       'todo-item': TodoItem
     },
-    data: function(){
-      return { todos: []}
-    },
+    store,
     methods: {
-      appendTodo(todo){
-        this.$data.todos.push(todo)
-      }
     },
     // ライフサイクルフック
     beforeCreate(arg) {
       console.log("beforeCreate");
-      axios.get('//localhost:3000/todo/list').then(
-        res => {
-          this.todos = res.data
-        }
-      )
+      store.dispatch('loadData')
     }
   }
 </script>

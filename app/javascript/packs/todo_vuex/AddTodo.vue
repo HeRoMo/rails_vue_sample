@@ -6,21 +6,17 @@
 
 <script>
   'use strict';
-  import axios from 'axios'
+  import store from './store'
 
   export default {
-//    props:['newTodo'], //propsは親コンポーネントからの値を格納する場所
     data: function(){
       return { newTodo: this.newTodo };
     },
     methods:{
       addTodo(){
         if(!this.newTodo) return; //空はなにもしない。
-        axios.post('//localhost:3000/todo', { title: this.newTodo, priority:1})
-          .then( response =>{
-            this.newTodo = '';
-            this.$emit('add', response.data) // 親コンポーネントにTodo追加を通知する
-        })
+        store.dispatch('addTodo', this.newTodo)
+        this.newTodo = '';
       }
     }
   }
