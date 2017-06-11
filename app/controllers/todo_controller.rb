@@ -16,7 +16,7 @@ class TodoController < ApplicationController
   end
 
   def create
-    Todo.create todo_params
+    @todo = Todo.create todo_params
   end
 
   def destroy

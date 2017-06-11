@@ -1,6 +1,7 @@
 <template lang="pug">
   #todo-app
     h2 TODO List
+    add-todo(@add="appendTodo")
     ul
       todo-item(v-for="todo in todos", :todo="todo", :key="todo.id")
 
@@ -9,46 +10,29 @@
 <script>
   'use strict';
   import axios from 'axios';
+  import AddTodo from './AddTodo.vue'
   import TodoItem from './TodoItem.vue'
   export default {
-
-    props: {
-
-    },
     components:{
+      'add-todo': AddTodo,
       'todo-item': TodoItem
     },
     data: function(){
       return { todos: []}
     },
     methods: {
-
+      appendTodo(todo){
+        this.$data.todos.push(todo)
+      }
     },
     // ライフサイクルフック
-    beforeCreate(){
-      console.log("beforeCreate")
-    },
-    created(arg) {
-      console.log("Created")
-      console.log(this)
+    beforeCreate(arg) {
+      console.log("beforeCreate");
       axios.get('//localhost:3000/todo/list').then(
         res => {
           this.todos = res.data
         }
       )
-    },
-    beforeMount(){
-      console.log("beforeMount")
-    },
-    mounted(){
-      console.log("mounted")
-    },
-    beforeUpdate(){
-      console.log("beforeUpdate")
-
-    },
-    updated(){
-      console.log("updated")
     }
   }
 </script>
