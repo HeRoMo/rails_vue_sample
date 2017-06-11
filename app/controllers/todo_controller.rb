@@ -1,14 +1,18 @@
 class TodoController < ApplicationController
+
   def list
     @todo_list = Todo.all
   end
 
-  def index
-  end
+  def index; end
 
   def update
-    Todo.update todo_params
-
+    @todo = Todo.find params[:id]
+    if params[:done]
+      @todo.update(done_at: Time.now)
+    else
+      @todo.update(done_at: nil)
+    end
   end
 
   def create
@@ -20,7 +24,8 @@ class TodoController < ApplicationController
   end
 
   private
+
   def todo_params
-    params.require(:todo).permit(:title, :done_at)
+    params.require(:todo).permit(:title, :priority, :done)
   end
 end
