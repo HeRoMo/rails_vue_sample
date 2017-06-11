@@ -1,1 +1,1 @@
-json.merge! @todo.attributes.merge({ done: @todo.done? })
+json.partial! 'todo_item', todo: @todo
