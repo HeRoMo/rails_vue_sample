@@ -12,9 +12,15 @@
 
   export default {
     props:['todo'],
+    data: function(){
+      return { todoData: this.todo }
+    },
     methods: {
       change(){
         axios.put('//localhost:3000/todo/'+ this.todo.id, this.todo)
+          .then(response => {
+            Object.assign(this.todo, response.data);
+          })
       }
     }
   }
