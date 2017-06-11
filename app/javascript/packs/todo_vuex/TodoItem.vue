@@ -8,7 +8,7 @@
 
 <script>
   'use strict';
-  import axios from 'axios'
+  import store from './store'
 
   export default {
     props:['todo'],
@@ -17,10 +17,7 @@
     },
     methods: {
       change(){
-        axios.put('//localhost:3000/todo/'+ this.todo.id, this.todo)
-          .then(response => {
-            Object.assign(this.todo, response.data);
-          })
+        store.dispatch('updateTodo', this.todo)
       }
     }
   }

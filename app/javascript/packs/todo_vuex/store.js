@@ -11,30 +11,34 @@ export default new Vuex.Store({
     loadData({commit}){
       axios.get('//localhost:3000/todo/list').then(
         response => {
-          commit('setList', response.data)
+          commit('loadData', response.data)
         }
       )
     },
     addTodo({commit}, todo){
       axios.post('//localhost:3000/todo', { title: todo, priority:1})
         .then( response =>{
-          commit('appendTodo', response.data)
+          commit('addTodo', response.data)
         })
+    },
+    updateTodo({commit}, todo){
+      axios.put('//localhost:3000/todo/'+ todo.id, todo)
+         .then(response => {
+           commit('updateTodo', response.data)
+         })
     }
   },
   mutations: {
-    setList(state, list){
+    loadData(state, list){
       state.todos = list;
     },
-    appendTodo(state, todo){
+    addTodo(state, todo){
       state.todos.push(todo)
     },
-    updateTodo(){
-      // const index = state.todos.indexOf(todo)
-      // console.log(index)
-      // state.todos.splice(index, 1, todo)
+    updateTodo(state, todo){
+      const index = state.todos.findIndex(elm => elm.id == todo.id)
+      state.todos.splice(index, 1, todo)
     }
-
   },
   getters: {}
 });
